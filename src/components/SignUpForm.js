@@ -1,37 +1,23 @@
 import "./SignUpForm.css";
-import { useState } from "react";
+import { useFormik } from "formik";
+const initialValues = { name: "", email: "", password: "" };
 const SignUpForm = () => {
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log(e.target);
+  const onSubmit = (values) => {
+    console.log(values);
   };
-  const changeHandler = ({ target }) => {
-    // console.log(e.target.value);
-    setUserData({ ...userData, [target.name]: target.value });
-  };
+  const formik = useFormik({ initialValues, onSubmit });
+
   return (
-    // <div>
-    //   {/* <form>
-    //     <input type="text" name="id" placeholder="name" />
-    //     <input type="email" name="id" placeholder="email" />
-    //     <button type="button">submit</button>
-    //   </form> */}
-    // </div>
-    <div class="login-box">
+    <div className="login-box">
       <h2>Login</h2>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={formik.handleSubmit}>
         <div className="user-box">
           <input
             type="text"
             name="name"
-            value={userData.name}
+            value={formik.values.name}
             required=""
-            onChange={changeHandler}
+            onChange={formik.handleChange}
           />
           <label>Username</label>
         </div>
@@ -39,9 +25,9 @@ const SignUpForm = () => {
           <input
             type="text"
             name="email"
-            value={userData.email}
+            value={formik.values.email}
             required=""
-            onChange={changeHandler}
+            onChange={formik.handleChange}
           />
           <label>Email</label>
         </div>
@@ -49,9 +35,9 @@ const SignUpForm = () => {
           <input
             type="password"
             name="password"
-            value={userData.password}
+            value={formik.values.password}
             required=""
-            onChange={changeHandler}
+            onChange={formik.handleChange}
           />
           <label>password</label>
         </div>
